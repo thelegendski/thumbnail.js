@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<!--
+    thumbnail.js - ski @thelegendski
+
+    ngl this webpage is pretty epic.
+    
+    screw the footer.
+    
+    credit:
+        PT for help with handlin' the imported script.
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>thumbnail.js</title>
+        <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Symbols|Cabin|Staatliches|Major+Mono+Display|Material+Icons+Outlined|Material+Symbols+Outlined|Josefin+Sans" rel="stylesheet"/>
+        <!-- keyframe -->
+        <style type = 'text/css'>
+            @keyframes fade-in {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+        <!-- general CSS -->
+        <style type = 'text/css'>
+            /* body stylez */
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                overflow-x: hidden;
+            }
+            
+            /* general page styles */
+            .page {
+                display: none;
+            }
+            .background {
+                position: fixed;
+                top: 0;
+                left: 0;
+                min-width: 100vw;
+                height: 100vh;
+            }
+            .page-container {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                width: 100vw;
+                position: relative;
+                padding-top: 10vh;
+            }
+            .page-title,
+            .page-meat,
+            .page-content {
+                color: rgba(250, 250, 250);
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(3px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+            .page-title {
+                font-family: 'Staatliches';
+                font-size: 15vh;
+                padding-left: 3vw;
+                padding-right: 3vw;
+            }
+            .page-meat,
+            .page-content {
+                font-family: 'Cabin';
+                font-size: 4vh;
+                margin-top: 15vh;
+                padding: 3vh;
+                margin-left: 5vw;
+                margin-right: 5vw;
+                margin-bottom: 5vh;
+                width: 85vw;
+                height: auto;
+            }
+            .page-meat {
+                display: flex;
+                flex-direction: column;
+                /*justify-content: center;*/
+                align-items: center;
+                position: relative;
+            }
+            .competitor, .competitor:active, .competitor:visited {
+                color: rgb(250, 250, 250);
+                font-weight: bold;
+                text-decoration: none;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                text-align: left;
+            }
+            .competitor-container {
+                text-align: right;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                margin-left: 30vw;
+            }
+        </style>
+        <!-- copy button -->
+        <style>
+            .copy {
+                border: solid 4px rgb(250, 250, 250, 0.75);
+                border-radius: 5px;
+                background: none;
+                width: 40vw;
+                height: 10vh;
+                color: white;
+                cursor: pointer;
+                transition: 0.25s;
+                font-family: 'staatliches';
+                font-size: 5vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .copy .material-icons {
+                font-size: 5vh;
+            }
+            .copy-text {
+                margin-left: 2vw;
+            }
+            .copy:hover {
+                transition: 0.5s;
+                background: rgb(250, 250, 250, 0.75);
+                color: rgb(0, 0, 0, 0.75);
+            }
+            .copy:active {
+                transition: 0.1s;
+                background: rgb(250, 250, 250, 0.85);
+            }
+            .indented {
+                margin-left: 10vw;
+                font-size: 3vh;
+                font-style: italic;
+            }
+        </style>
+        <!-- homepage -->
+        <style>
+            /* a whole bunch of homepage CSS */
+            .cover {
+                width: 100vw;
+                color: rgb(245, 245, 245);
+                padding-bottom: 10vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                font-size: 10vmin;
+            }
+            .title-container {
+                border: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100vw;
+                height: 100vh;
+            }
+            .title-background {
+                background: rgb(0, 0, 0, 0.5);
+                padding: 4vmin;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .hook-container {
+                width: 100vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .hook {
+                width: 85vw;
+                font-family: 'Cabin';
+                font-size: 3.5vmin;
+                background: rgba(0, 0, 0, 0.625);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                padding: 3vmin;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+            .title{
+                font-family: 'Major Mono Display';
+                font-size: 8vmin;
+            }
+            .spacing {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .spacing{
+                height: 3vmin;
+            }
+            .spacing[name='hook']{
+                height: 5vmin;
+            }
+            .spacing[name='redirect']{
+                height: 5vmin;
+            }
+            .underline{
+                height: 0.5vmin;
+                width: 85vmin;
+                background: rgb(245, 245, 245);
+            }
+            .subtitle{
+                font-size: 3.5vmin;
+                font-family: 'Staatliches';
+            }
+            .code{
+                font-family: 'Courier New';
+            }
+            .section-title {
+                text-align: center;
+                font-family: 'Major Mono Display';
+                font-size: 8vmin;
+            }
+            .redirect {
+                font-family: 'Josefin Sans';
+                width: 25vw;
+                font-size: 3vmin;
+            }
+            
+            /* homepage links */
+            .redirect-container,
+            .redirect-link-container {
+                width: 85vw;
+                height: 12vh;
+                background: rgba(0, 0, 0, 0.5);
+                color: rgb(245, 245, 245);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                transition: 0.5s;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .redirect-container:hover,
+            .redirect-link-container:hover {
+                background: rgba(245, 245, 245, 0.5);
+                color: rgba(0, 0, 0, 0.75);
+            }
+            .redirect-container:active,
+            .redirect-link-container:active {
+                background: rgba(245, 245, 245, 0.75);
+            }
+            .redirect-icon {
+                font-size: 6vmin;
+            }
+            .redirect-title {
+                font-family: 'Staatliches';
+                font-size: 6vmin;
+            }
+            
+            /* the one an' the only */
+            .skijs {
+                color: rgb(100, 150, 200);
+                text-decoration: none;
+                font-weight: bold;
+                letter-spacing: 1.5px;
+            }
+            
+            /* scrollbar */
+            ::-webkit-scrollbar {
+                width: 1vmin;
+            }
+            ::-webkit-scrollbar-track {
+                background: rgb(100, 100, 100);
+            }
+            ::-webkit-scrollbar-thumb {
+                background: rgb(100, 150, 200);
+            }
+        </style>
+        <!-- nav -->
+        <style>    
+            /* nav */
+            nav {
+                position: fixed;
+                display: flex;
+                top: 0;
+                left: 0;
+                width: 0vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.75);
+                overflow: hidden;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                user-select: none;
+                transition: 0.3s;
+            }
+            /* nav animation class */
+            .nav-open {
+                transition: 0.5s;
+                width: 30vw !important;
+            }
+            /* menu icon */
+            .menu-icon, .fullscreen-icon {
+                position: fixed;
+                top: 0;
+                margin: 1.5vmin;
+                font-size: 5vh;
+                color: rgb(250, 250, 250, 0.75);
+                cursor: pointer;
+                user-select: none;
+                z-index: 2;
+                transition: 0.25s;
+            }
+            .menu-icon:hover,
+            .fullscreen-icon:hover {
+                transition: 0.5s;
+                color: rgb(250, 250, 250, 0.9);
+            }
+            .menu-icon:active,
+            .fullscreen-icon:active {
+                transition: 0.25s;
+                color: rgb(250, 250, 250);
+            }
+            .menu-icon {
+                left: 0;
+            }
+            .fullscreen-icon {
+                right: 0;
+            }
+            /* nav tabs */
+            .nav-tab {
+                display: flex;
+                width: 50vw;
+                height: 10vh;
+                color: rgb(250, 250, 250);
+                font-family: 'Staatliches';
+                font-size: 4vh;
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                transition: 0.25s;
+                backdrop-filter: blur(0px);
+                -webkit-backdrop-filter: blur(5px);
+                overflow-y: hidden;
+            }
+            .nav-icon {
+                position: fixed;
+                margin: 0;
+                font-size: 6vh;
+                transition: 0.4s;
+            }
+            .nav-text {
+                position: fixed;
+                margin: 0;
+                opacity: 0;
+                overflow: hidden;
+                transform: translate(0vw, -10vh);
+                font-size: 5vh;
+                transition: 0.2s;
+            }
+            /* more animations... */
+            .nav-in {
+                transition: 0.3s;
+                opacity: 1;
+                transform: translate(0vw, 0vh);
+            }
+            .nav-out {
+                transition: 0.3s;
+                opacity: 0;
+                transform: translate(0vw, 10vh);
+            }
+            /* cover for the nav tabs */
+            .nav-tab-cover {
+                z-index: 3;
+                width: 50vw;
+                height: 10vh;
+                margin-top: -10vh;
+                background: none;
+                cursor: pointer;
+                position: relative;
+            }
+            .nav-tab-open {
+                transition: 0.5s;
+                background: rgba(250, 250, 250, 0.3);
+                backdrop-filter: blur(3px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+            .nav-tab-click {
+                transition: 0.1s;
+                background: rgba(250, 250, 250, 0.4);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class = 'nav-tab'>
+                <span class = 'nav-icon material-icons'>home</span>
+                <span class = 'nav-text'>home</span>
+            </div>
+            <div class = 'nav-tab-cover'></div>
+            <div class = 'nav-tab'>
+                <span class = 'nav-icon material-symbols-outlined'>help</span>
+                <span class = 'nav-text'>how</span>
+            </div>
+            <div class = 'nav-tab-cover'></div>
+            <div class = 'nav-tab'>
+                <span class = 'nav-icon material-icons'>leaderboard</span>
+                <span class = 'nav-text'>why</span>
+            </div>
+            <div class = 'nav-tab-cover'></div>
+            <div class = 'nav-tab'>
+                <span class = 'nav-icon material-symbols-outlined'>question_answer</span>
+                <span class = 'nav-text'>q&a</span>
+            </div>
+            <div class = 'nav-tab-cover'></div>
+            <div class = 'nav-tab'>
+                <span class = 'nav-icon material-icons'>code</span>
+                <span class = 'nav-text'>use</span>
+            </div>
+            <a class = 'nav-tab-cover' target = "_blank" href = "https://www.khanacademy.org/cs/-/5384049370120192"></a>
+        </nav>
+        <main>
+            <div class = 'page home'  style = 'display: block'>
+                <img class = 'background' src = "https://upload.wikimedia.org/wikipedia/commons/e/ee/AtmosphereByDesignermadsen-dfc4pwv.png">
+                <div class = 'cover'>
+                    <div class = 'title-container'>
+                        <div class = 'title-background'>
+                            <div class = 'title'>
+                                thumbnail.JS
+                            </div>
+                            <div class = 'spacing'>
+                                <span class = 'underline'></span>
+                            </div>
+                            <div class = 'subtitle'>
+                                the best way to thumbnail.
+                            </div>
+                        </div>
+                    </div>
+                    <div class = 'hook-container'>
+                        <div class = 'hook'>
+                            <span class = 'section-title'>welcome</span>
+                            <div class = 'spacing' name = 'hook'>
+                                <span class = 'underline'></span>
+                            </div>
+                            <p>here at ski co., we've been workin' non-stop for hours on end to bring you the best.  now, we've created a thumbnail script more reliable than Bluebird's method (it doesn't help that he's usin' a library nearly a decade old) an' much easier to use than <span class = 'code'>fetch</span>. we combined the power, efficiency, an' simplicity of <a class = 'skijs' href = 'https://www.khanacademy.org/cs/-/4791341272317952'>ski.js</a> with user-friendliness to give you the power to fix your thumbnail by simply pressin' the escape key. we even promise a lifetime money-back GUARANTEE if you are not satisfied with thumbnail.js!</p>
+                        </div>
+                    </div>
+                    <span class = 'spacing' name = 'redirect'></span>
+                    <span class = 'spacing' name = 'redirect'></span>
+                    <div class = 'redirect-container' id = 'how'>
+                        <span class = 'material-symbols-outlined redirect-icon'>help</span>
+                        <span class = 'redirect-title' name = 'how'>HOW</span>
+                        <span class = 'redirect' name = 'how'>
+                            learn how to use thumbnail.js
+                        </span>
+                    </div>
+                    <span class = 'spacing' name = 'redirect'></span>
+                    <div class = 'redirect-container' id = 'why'>
+                        <span class = 'material-icons redirect-icon'>leaderboard</span>
+                        <span class = 'redirect-title' name = 'how'>WHY</span>
+                        <span class = 'redirect' name = 'how'>
+                            learn how thumbnail.js beats its comptetitors
+                        </span>
+                    </div>
+                    <span class = 'spacing' name = 'redirect'></span>
+                    <div class = 'redirect-container' id = 'q&a'>
+                        <span class = 'material-icons-outlined redirect-icon'>question_answer</span>
+                        <span class = 'redirect-title' name = 'how'>Q&A</span>
+                        <span class = 'redirect' name = 'how'>
+                            quick resource to find answers to common questions
+                        </span>
+                    </div>
+                    <span class = 'spacing' name = 'redirect'></span>
+                    <a class = 'redirect-link-container' target = "_blank" href = "https://www.khanacademy.org/cs/-/5384049370120192">
+                        <span class = 'material-icons redirect-icon'>code</span>
+                        <span class = 'redirect-title' name = 'how'>USE</span>
+                        <span class = 'redirect' name = 'how'>
+                            link to template
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class = 'page how'>
+                <img class = 'background' src = "https://upload.wikimedia.org/wikipedia/commons/5/5f/FractalsByDesignermadsen-dfb539i.png">
+                <div class = 'page-container'>
+                    <span class = 'page-title'>HOW</span>
+                    <div class = 'page-meat'>
+                        5 steps. super simple. super easy.
+                        <br><br>
+                        1.) press the big juicy copy button, :D!
+                        <br><br>
+                        <button class = 'copy'>
+                            <span class = 'material-icons'>content_copy</span>
+                            <span class = 'copy-text'>COPY</span>
+                        </button>
+                        <br>
+                        <p>
+                            2.) paste the code at the bottom of the <span style = "font-family: 'Courier New';">body</span> tag. 
+                            <br>
+                            3.) create your thumbnail in the provided script.
+                            <br>
+                            <span class = 'indented'>press the escape key to view your work</span>
+                            <br>
+                            4.) press the escape key when you need to save.
+                            <br>
+                            5.) enjoy the wonderful thumbnail on the HL, :D!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class = 'page why'>
+                <img class = 'background' src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/RoadByDesignermadsen-dfbtgqs.png/1200px-RoadByDesignermadsen-dfbtgqs.png'>
+                <div class = 'page-container'>
+                    <span class = 'page-title'>why</span>
+                    <div class = 'page-content'>
+                        <p style = 'text-align: center;'>
+                            let's dig into why thumbnail.js outperforms its competitors.
+                        </p> <br><br>
+                        <a class = 'competitor' href = 'https://www.khanacademy.org/cs/-/5865237244755968'>LIFTOFF:</a>
+                        <span class = 'competitor-container'>
+                            the tedious method. not to downplay the excellent find by Liftoff which i've abused to solve the KA height bug a lil' bit ago, but it just doesn't cut it for HTML thumbnails. you might get the same result BUT it's nowhere near as simple or easy as thumbnail.js.
+                        </span>
+                        <a class = 'competitor' href = 'https://www.khanacademy.org/cs/-/5833972799930368'>BLUEBIRD: </a>
+                        <span class = 'competitor-container'>
+                            simple, but it doesn't always work. currently, i have not released a single webpage where Bluebird's script functions as intended. i'm sure it doesn't help that he uses a library over a decade old, but the latest version of the library doesn't fix the issue either.
+                        </span>
+                        <span class = 'competitor'>
+                            ski: 
+                        </span>
+                        <span class = 'competitor-container'>
+                            not super simple or easy, but also not hard. while the setup is not the easiest in the world, it's easier than Liftoff's while maintaining 100% reliability. why? thumbnail.js utilizes the canvas element to display thumbnails which when combined with ski.js looks nearly identical to the simplicity of PJS.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class = 'page q&a'>
+                <img class = 'background' src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/AI_Generated_abstract_image.png'>
+                <div class = 'page-container'>
+                    <span class = 'page-title'>Q&A</span>
+                    <div class = 'page-content'>
+                        <span class = 'competitor'>
+                            how do i use fonts?
+                        </span>
+                        <span class = 'competitor-container'>
+                            <p>due to the need to load, it is highly recommended that you place your thumbnail inside the <span style = 'font-family: "Courier New"'>draw</span> function. to use a specific font(s), simply add a <span style = 'font-family: "Courier New"'>link</span> tag that imports your fonts at the top of the header as you normally would.</p>
+                        </span>
+                        <span class = 'competitor'>
+                            do i need to know <br>
+                            how to use PJS?
+                        </span>
+                        <span class = 'competitor-container'>
+                            no, you do not NEED to, but ski.js relies upon the beginner-friendliness of PJS in the utility an' names of functions. that said, you don't need to know how to animate or create games in PJS to use ski.js for thumbnails.
+                        </span>
+                        <span class = 'competitor'>
+                            how do i load <br>
+                            images?
+                        </span>
+                        <span class = 'competitor-container'>
+                            <p>use the <span style = 'font-family: "Courier New"'>loadImage</span> function to load an image by inserting your image source as the first argument. proceed to use <span style = 'font-family: "Courier New"'>loadImage</span> as you would <span style = 'font-family: "Courier New"'>getImage</span>. you'll need to use a draw function as the image needs to load.</p>
+                        </span>
+                        <span class = 'competitor'>
+                            i'm not comfortable <br>
+                            with ski.js or PJS. <br>
+                            how would i use <br>
+                            thumbnail.js?
+                        </span>
+                        <span class = 'competitor-container'>
+                            currently, ski.js does not have a documentation, so any questions you have regarding development can be asked in the questions tab an' i will be more than glad to help out, :D! you should recieve a response within 48 hours.
+                        </span>
+                        <span class = 'competitor'>
+                            do i need to give <br>
+                            credit?
+                        </span>
+                        <span class = 'competitor-container'>
+                            no, :D! all code is hosted on GitHub (not KA) under the MIT license, so no credit needed, :p.
+                        </span>
+                        <span class = 'competitor'>
+                            does this actually <br>
+                            work?
+                        </span>
+                        <span class = 'competitor-container'>
+                            don't believe me? press the escape key, ;p.
+                        </span>
+                        <span class = 'competitor'>
+                            i don't quite <br>
+                            understand. HELP?!
+                        </span>
+                        <span class = 'competitor-container'>
+                            open the nav an' click USE or the last icon. i've provided an example that displays everythin' talked 'bout here.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <span class = 'material-icons menu-icon'>menu</span>
+        <span class = 'material-icons fullscreen-icon'>fullscreen</span>
+        <!-- scripts for the webpage -->
+        <script type = 'module'>
+            //easy way to iterate over HTMLCollection
+            HTMLCollection.prototype.loop = function(f) {
+                for(let i = this.length; i--;) f(this[i], i, this)
+            }
+            
+            //select all needed elements
+            const menu_icon = document.getElementsByClassName('menu-icon')[0], 
+                nav = document.getElementsByTagName('nav')[0],
+                nav_covers = document.getElementsByClassName('nav-tab-cover'),
+                nav_tabs = document.getElementsByClassName('nav-tab'),
+                nav_iconz = document.getElementsByClassName('nav-icon'),
+                nav_text = document.getElementsByClassName('nav-text'),
+                fullscreen_icon = document.getElementsByClassName('fullscreen-icon')[0],
+                copy_icon = document.getElementsByClassName('copy')[0],
+                copy_text = document.getElementsByClassName('copy-text')[0],
+                redirects = document.getElementsByClassName('redirect-container'),
+                redirect_titlez = document.getElementsByClassName('redirect-title')
+                
+            //page navigation
+            window.nav = p => {
+                const pages = document.getElementsByClassName('page')
+                pages.loop(page => {
+                    if(page.classList.contains(p)){
+                        page.style.display = 'block'
+                        page.style.animation = 'fade-in 0.5s forwards'
+                    }
+                    else {
+                        page.style.display = 'none'
+                    }
+                })
+                window.scroll(0, 0)
+                nav.classList.remove('nav-open')
+            }    
+            
+            //nav open-close animation
+            menu_icon.onclick = () => nav.classList.toggle('nav-open')
+            //nav tab animationz. improved with classes, o.O.
+            nav_covers.loop((cover, i) => {
+                const classes = nav_tabs[i].classList, icon_class = nav_iconz[i].classList, text_class = nav_text[i].classList
+                cover.onmouseenter = cover.onmouseleave = () => {
+                    classes.toggle('nav-tab-open')
+                    icon_class.toggle('nav-out')
+                    text_class.toggle('nav-in')
+                }
+                cover.onmousedown = cover.onmouseup = () => {   
+                    classes.toggle('nav-tab-click')
+                }
+                if(!cover.href){
+                    cover.onclick = () => window.nav(nav_text[i].innerText)
+                }
+            })
+            
+            //homepage redirect functionality
+            redirects.loop((r, i) => {
+                r.onclick = () => window.nav(redirect_titlez[i].innerText.toLowerCase())
+            })
+            
+            
+            //copy functionality
+            const copy = text => {
+                //creates a new hidden element with the text provided
+                const element = document.createElement('textarea')
+                element.textContent = text
+                //fixes the MS Edge scroll bug
+                element.style.position = 'fixed'
+                //adds the element to the body
+                document.body.appendChild(element)
+                //selects the element
+                element.select()
+                //copies the element an' checks for errors
+                //mostly browser security protocol
+                try {document.execCommand('copy')}
+                catch(e) {console.error(e)}
+                //removes the element from the body
+                document.body.removeChild(element)
+            }
+            copy_icon.onclick = () => {
+                copy("\t\t<!-- thumbnail.js -->\n\t\t<script type = 'thumbnail.js' name = 'thumbnail'>\n\t\t\t//your thumbnail here, :D!\n\t\t\u003c/script>\n\t\t<canvas style = 'display: none;' name = 'ski'></canvas>\n\t\t<script src = 'https://cdn.jsdelivr.net/gh/thelegendski/ski.js@1.5.1/ski.js'>\u003c/script>\n\t\t<script src = 'https://cdn.jsdelivr.net/gh/thelegendski/thumbnail.js@1.0.0/main.js'>\u003c/script>")
+                copy_text.innerHTML = 'copied!'
+                setTimeout(() => copy_text.innerHTML = 'copy', 1500)
+            }
+            
+            //fullscreen functionality
+            fullscreen_icon.onclick = () => {
+                const win = window.open()
+                win.document.open()
+                win.document.write(`<!DOCTYPE html>${document.getElementsByTagName('html')[0].outerHTML}`)
+                win.document.close()
+                win.fullscreen = !0
+            }
+            
+            //disable fullscreen if you're already in fullscreen
+            if(window.fullscreen){
+                document.getElementsByClassName('fullscreen-icon')[0].style.display = 'none'
+            }
+            
+            //window.nav('how')
+        </script>
+        <script> window.scroll(0, 0) </script>
+        <!-- thumbnail.js :p -->
+        <script type = 'thumbnail.js' name = 'thumbnail'>
+            const img = loadImage('https://upload.wikimedia.org/wikipedia/commons/e/ee/AtmosphereByDesignermadsen-dfc4pwv.png', 900, 600)
+            
+            imageMode(0)
+            textAlign(1, 1)
+            
+            draw = () => {
+                clear()
+                image(img, 0, 0)
+                noStroke()
+                fill(0, 255 * 5 / 8)
+                rect(300, 300, 550, 125)
+                stroke(245)
+                strokeWeight(5)
+                line(100, 310, 500, 310)
+                noStroke()
+                fill(245)
+                textFont('Major Mono Display', 45)
+                text('thumbnail.JS', 300, 275)
+                textFont('Staatliches', 22)
+                text('the best way to thumbnail.', 300, 335)
+            }
+        </script>
+        <canvas style = 'display: none;' name = 'ski'></canvas>
+        <script src = 'https://cdn.jsdelivr.net/gh/thelegendski/ski.js@1.5.1/ski.js'></script>
+        <script src = 'https://cdn.jsdelivr.net/gh/thelegendski/thumbnail.js@1.0.0/main.js'></script>
+        </body>
+</html>
+<!-- better than trava, o.O. just keeps gettin' better. -->
