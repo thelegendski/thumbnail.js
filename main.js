@@ -1,9 +1,6 @@
 /*
 thumbnail.js
-version 1.0.0
-
-all code is made available and to be used under the MIT license. see here: http://opensource.org/licenses/mit-license.php
-intended for use in the Khan Academy environment. use outside of an educational environment is not intended.
+version 1.1.0
 */
 HTMLCollection.prototype.loop = function(f) {
     for(let i = this.length; i--;) f(this[i], i, this)
@@ -13,8 +10,6 @@ document.addEventListener('keydown', e => {
     if(e.code === 'Escape'){
         //prevent the default action
         e.preventDefault()
-        //set the canvas to the correct canvas
-        canvas = document.getElementsByName('ski')[0]
         //grab the code inputted by the user
         const CODE = document.getElementsByName('thumbnail')[0].innerText
         //reset the header
@@ -54,5 +49,8 @@ document.addEventListener('keydown', e => {
         code.innerHTML = CODE
         //add the script [code]
         document.body.appendChild(code)
+        //bug fix - selects thumbnail.js canvas element in case another canvas element exists
+        set(document.getElementsByTagName('ski')[0])
+        size(window.innerWidth, window.innerHeight)
     }
 })
