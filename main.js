@@ -50,7 +50,7 @@ document.addEventListener('keydown', e => {
         //add the script [code]
         document.body.appendChild(code)
         //bug fix - selects thumbnail.js canvas element in case another canvas element exists
-        set(document.getElementsByTagName('ski')[0])
+        set(document.getElementsByName('ski')[0])
         size(window.innerWidth, window.innerHeight)
     }
 })
