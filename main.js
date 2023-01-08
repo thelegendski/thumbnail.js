@@ -1,6 +1,6 @@
 /*
 thumbnail.js
-version 1.1.0
+version 1.1.2
 */
 HTMLCollection.prototype.loop = function(f) {
     for(let i = this.length; i--;) f(this[i], i, this)
@@ -10,6 +10,9 @@ document.addEventListener('keydown', e => {
     if(e.code === 'Escape'){
         //prevent the default action
         e.preventDefault()
+        //bug fix - selects thumbnail.js canvas element in case another canvas element exists
+        set(document.getElementsByName('ski')[0])
+        size(window.innerWidth, window.innerHeight)
         //grab the code inputted by the user
         const CODE = document.getElementsByName('thumbnail')[0].innerText
         //reset the header
@@ -49,8 +52,5 @@ document.addEventListener('keydown', e => {
         code.innerHTML = CODE
         //add the script [code]
         document.body.appendChild(code)
-        //bug fix - selects thumbnail.js canvas element in case another canvas element exists
-        set(document.getElementsByName('ski')[0])
-        size(window.innerWidth, window.innerHeight)
     }
 })
