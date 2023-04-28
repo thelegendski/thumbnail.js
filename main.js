@@ -1,28 +1,24 @@
 /*
-thumbnail.js
-version 1.1.2
+    thumbnail.js
+    version 1.1.3
+    thumbnail.js has a dependency of ski.js/defer.min.js
 */
-HTMLCollection.prototype.loop = function(f) {
-    for(let i = this.length; i--;) f(this[i], i, this)
+HTMLCollection.prototype.forEach = function(func) {
+    for(let i = this.length; i--;) func(this[i], i, this)
 }
 //the function that does all of the magic, o.O
 document.addEventListener('keydown', e => {
     if(e.code === 'Escape'){
         //prevent the default action
         e.preventDefault()
-        //bug fix - selects thumbnail.js canvas element in case another canvas element exists
-        set(document.getElementsByName('ski')[0])
-        size(window.innerWidth, window.innerHeight)
         //grab the code inputted by the user
         const CODE = document.getElementsByName('thumbnail')[0].innerText
-        //reset the header
-        //document.head.innerHTML = ''
-        document.getElementsByTagName('style').loop(s => s.parentElement.removeChild(s))
+        //clears all previous stylin'
+        document.getElementsByTagName('style').forEach(s => s.parentElement.removeChild(s))
         //create a new style tag
         const style = document.createElement('style')
         //set the style tag
-        style.innerHTML = `
-        * {
+        style.innerHTML = `* {
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -32,15 +28,21 @@ document.addEventListener('keydown', e => {
             width: 100vw;
             height: 100vh;
         }
-        canvas [name='ski'] {
+        canvas {
             width: 100vw;
             height: 100vh;
             z-index: 100;
         }`
-        //add a new style tag
+        //add the new style tag
         document.head.appendChild(style)
         //reset the body
         document.body.innerHTML = ''
+        //create a canvas element
+        const canvas = document.createElement("canvas")
+        //ski.js needs to recognize the canvas
+        set(canvas)
+        //an' set its resolution
+        size(window.innerWidth, window.innerHeight, true)
         //add a canvas element
         document.body.appendChild(canvas)
         canvas.style.display = 'block'
